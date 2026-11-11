@@ -195,15 +195,15 @@ function renderLogin() {
       h("div", null,
         h("span", { class: "kick", text: "🌍 진로 특강 과제 · 1·2학년" }),
         h("h1", null, "기후가 바꾸는", h("br"), h("em", { text: "나의 직업 지도" })),
-        h("p", { class: "lead", text: "특강에서 쓴 '2040 나의 직업 카드'에서 출발해, 과제 A~D 가운데 하나(또는 계열별 탐구 질문)를 골라 자료를 찾고 A4 1~2쪽 보고서로 정리해 제출해요." }),
-        h("ul", { class: "chips" }, h("li", { text: "📝 과제 A~D" }), h("li", { text: "🧭 계열별 질문 " + TOPICS.filter(function (t) { return t.tr > 0; }).length + "개" }), h("li", { text: "💾 단계마다 저장" }), h("li", { text: "🖨️ A4 보고서 인쇄" })),
+        h("p", { class: "lead", text: "모든 학생은 기본 과제로 특강 소감문(A4 1장)을 써요. 더 알아보고 싶은 학생은 심화 선택 과제로 내 계열에 맞는 탐구를 해서 보고서를 내요." }),
+        h("ul", { class: "chips" }, h("li", { text: "✍️ 기본: 소감문 A4 1장" }), h("li", { text: "🚀 심화: 선택 과제" }), h("li", { text: "🧭 계열별 가이드" }), h("li", { text: "💾 단계마다 저장" })),
         h("button", { class: "btn ghost browse-btn", type: "button", text: "👀 로그인 없이 둘러보기", onclick: startBrowse })),
       h("img", { class: "art", src: "img/map.svg?v=1", width: "620", height: "380", alt: "탐구 지도: 새싹에서 출발해 돋보기와 큰 나무, 세 정거장을 지나는 그림" })),
     demoBanner(),
     h("div", { class: "login" },
       h("section", { class: "panel" },
         h("h2", { text: "🧭 이렇게 진행해요" }),
-        h("p", { class: "hint", text: NUMK + " 정거장을 하나씩 지나가요. 단계마다 저장하고, 다음에 이어서 쓰면 돼요." }),
+        h("p", { class: "hint", text: "기본 과제만 해도 제출 완료예요. 심화는 원하는 학생이 이어서 해요. 단계마다 저장하고, 다음에 이어서 쓰면 돼요." }),
         kindLegend(),
         h("ol", { class: "flow" }, STAGES.map(function (st) {
           return h("li", { class: "c-" + st.id + " " + kcls(st) }, h("span", { class: "em", "aria-hidden": "true", text: LOOK[st.id] }),
@@ -249,7 +249,7 @@ function fieldEl(f) {
   const val = S.data[f.key] == null ? "" : String(S.data[f.key]);
   const set = function (v) {
     S.data[f.key] = v; markDirty();
-    if (f.key === "track") { TT.tab = TRACKS.indexOf(v) + 1; const tb = document.getElementById("topics"); if (tb && tb._draw) tb._draw(); }
+    if (f.key === "track") { TT.tab = TRACKS.indexOf(v) + 1; const tb = document.getElementById("topics"); if (tb && tb._draw) tb._draw(); document.querySelectorAll(".tg").forEach(function (d, i) { d.open = i === TRACKS.indexOf(v); }); }
   };
   if (f.kind === "select") inp = segEl(f.opts, val, set, f.label);
   else {
@@ -339,7 +339,7 @@ function doneCount() { return STAGES.filter(function (st) { return stageStatus(S
 function celebrate(st) {
   const all = doneCount() === STAGES.length;
   const i = STAGES.indexOf(st), next = STAGES[i + 1];
-  toast(all ? "🏆 " + NUMK + " 정거장을 모두 지났어요! 보고서 완성!" : "🎉 " + st.badge + " '" + st.nick + "' 완료!" + (next ? " 다음은 " + next.badge + " '" + next.nick + "' " + LOOK[next.id] : ""));
+  toast(all ? "🏆 기본과 심화 과제를 모두 마쳤어요!" : st.id === "s1" ? "🎉 기본 과제 제출 완료! 심화는 원하면 이어서 해요." : "🎉 " + st.badge + " '" + st.nick + "' 완료!" + (next ? " 다음은 " + next.badge + " '" + next.nick + "' " + LOOK[next.id] : ""));
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const colors = ["#f59e0b", "#0ea5e9", "#22c55e", "#ec4899", "#8b5cf6", "#facc15"];
   const box = h("div", { class: "confetti", "aria-hidden": "true" });
@@ -409,12 +409,12 @@ function teacherNote(st) {
     filled(fb) ? h("p", { style: "margin:4px 0 0; white-space:pre-wrap", text: String(fb) }) : null);
 }
 function refBlock() {
-  const items = [["2040 직업 카드", "job2040"], ["나의 질문", "question"], ["자료 카드 ① 제목·출처", "a1_title"], ["알게 된 사실", "facts"], ["중간 점검", "mid"]];
-  if (!items.some(function (x) { return filled(S.data[x[1]]); })) return h("div", { class: "tfb wait", text: "🌱 1·2단계를 먼저 저장하면 여기에서 질문과 사실을 다시 볼 수 있어요." });
+  const items = [["더 알아보고 싶은 점 (소감문)", "e3"], ["나의 질문", "question"], ["자료 카드 ① 제목", "a1_title"], ["알게 된 사실", "facts"], ["중간 점검", "mid"]];
+  if (!items.some(function (x) { return filled(S.data[x[1]]); })) return h("div", { class: "tfb wait", text: "🌱 기본 과제와 심화 ①을 먼저 저장하면 여기에서 질문과 사실을 다시 볼 수 있어요." });
   const dl = h("dl", { class: "refdl" });
   items.forEach(function (x) { dl.append(h("dt", { text: x[0] }), h("dd", { class: filled(S.data[x[1]]) ? "" : "empty", text: filled(S.data[x[1]]) ? String(S.data[x[1]]) : "(비어 있음)" })); });
   return h("details", { class: "ref", open: true },
-    h("summary", { text: "🌱 앞에서 쓴 내용 보기 (1·2단계)" }), dl,
+    h("summary", { text: "🌱 앞에서 쓴 내용 보기" }), dl,
     filled(S.data.question) ? h("button", { class: "btn ghost small", type: "button", text: "① 칸에 나의 질문 넣기", onclick: function () {
       const ta = document.getElementById("f_r1");
       if (filled(ta.value) && !confirm("① 칸에 이미 쓴 글이 있습니다. 바꿀까요?")) return;
@@ -422,9 +422,9 @@ function refBlock() {
       S.data.r1 = ta.value; markDirty(); ta.focus();
     } }) : null);
 }
-function kcls(st) { return st.kind === "과제" ? "k-hw" : "k-cls"; }
+function kcls(st) { return st.kind === "기본" ? "k-cls" : "k-hw"; }
 function kindLegend() {
-  return h("p", { class: "klegend" }, h("span", { class: "k-cls" }, "✍️ 특강 시간에 직업 카드 쓰기"), h("span", { class: "k-hw" }, "🏠 집에서 과제 하고 💾 저장"), h("span", { class: "k-cls" }, "💬 단계마다 선생님 확인"));
+  return h("p", { class: "klegend" }, h("span", { class: "k-cls" }, "✍️ 기본: 모두 쓰는 소감문"), h("span", { class: "k-hw" }, "🚀 심화: 원하는 학생만"), h("span", { class: "k-cls" }, "💬 단계마다 선생님 확인"));
 }
 /* 과제·질문 고르기: 과제 A~D 카드나 계열별 탐구 질문 카드를 골라 칸을 채운다 */
 const TT = { tab: -1 };
@@ -464,6 +464,19 @@ function topicsBox() {
   };
   box._draw = draw; draw();
   return box;
+}
+function tracksBox() {
+  const mine = TRACKS.indexOf(S.data.track);
+  return h("section", { class: "note tguide" },
+    h("h4", null, h("i", { class: "ico", "aria-hidden": "true", text: "🧭" }), "계열별 심화 활동 가이드", h("small", { text: " · 내 계열을 펼쳐 봐요" })),
+    TRACK_GUIDE.map(function (g, i) {
+      return h("details", { class: "tg", open: i === mine ? true : null },
+        h("summary", { text: TRACK_EM[i] + " " + TRACKS[i] + " · 추천: " + g[0] }),
+        h("ol", null, g[1].map(function (x) { return h("li", { text: x }); })),
+        h("p", null, h("b", { text: "📄 결과물 " }), g[2]),
+        h("p", null, h("b", { text: "🔗 자료 " }), g[3]),
+        h("p", null, h("b", { text: "⚠️ 조심 " }), g[4]));
+    }));
 }
 function exBox(f) {
   if (!f.ex) return null;
@@ -522,6 +535,7 @@ function blockEl(b) {
   if (b.t === "links") return linksBox(b.compact);
   if (b.t === "college") return collegeBox(true);
   if (b.t === "topics") return topicsBox();
+  if (b.t === "tracks") return tracksBox();
   return null;
 }
 function renderStudent() {
@@ -545,13 +559,15 @@ function renderStudent() {
       h("button", { class: "linkbtn", type: "button", text: "로그인", onclick: goLogin }), "하고, 처음 소개로 돌아가려면 ",
       h("button", { class: "linkbtn", type: "button", text: "처음 화면으로", onclick: goHome }), " 가요.") : null,
     !S.browse && doneCount() === STAGES.length ? h("div", { class: "finish" }, h("img", { src: "img/done.svg?v=1", alt: "" }),
-      h("div", null, h("b", { text: "🏁 " + NUMK + " 정거장을 모두 지났어요!" }), h("span", { text: "보고서를 완성했어요. '전체 보기·인쇄'로 내 보고서를 한눈에 볼 수 있어요." }))) : null,
+      h("div", null, h("b", { text: "🏁 기본과 심화 과제를 모두 마쳤어요!" }), h("span", { text: "소감문과 심화 보고서를 완성했어요. '전체 보기·인쇄'로 내 보고서를 한눈에 볼 수 있어요." }))) : null,
+    !S.browse && doneCount() < STAGES.length && stageStatus(S.data, STAGES[0]) === 2 ? h("div", { class: "finish" }, h("img", { src: "img/done.svg?v=1", alt: "" }),
+      h("div", null, h("b", { text: "✅ 기본 과제(소감문)를 제출했어요!" }), h("span", { text: "여기까지만 해도 괜찮아요. 더 탐구하고 싶으면 '심화 ①'로 넘어가요." }))) : null,
     h("div", { id: "prog", class: "prog" }),
     h("div", { id: "nav", class: "nav" }),
     h("div", { class: "panel stage c-" + st.id + " " + kcls(st) },
       h("div", { class: "shead" },
         h("span", { class: "big", "aria-hidden": "true", text: LOOK[st.id] }),
-        h("span", { class: "tag" + (st.kind === "과제" ? " hw" : ""), text: (st.kind === "과제" ? "🏠 " : "✍️ ") + st.badge + " · " + st.nick }),
+        h("span", { class: "tag" + (st.kind === "기본" ? "" : " hw"), text: st.tag + " · " + st.nick }),
         h("h2", { text: st.title }),
         h("p", null, h("b", { text: "🎯 목표 " }), st.goal + "  ·  ⏱ " + st.time),
         h("div", { class: "kband" }, h("b", { text: st.band[0] }), st.band[1])),
@@ -760,9 +776,10 @@ function detailPanel(r) {
     h("div", { style: "margin:16px 0 4px" }, save),
     answersView(r));
 }
-const SUM = [["계열", "track"], ["과제", "hw"], ["주제", "topic"], ["꿈꾸는 직업", "job"], ["기후 키워드", "kw"], ["2040 새로운 일", "job2040"], ["이번 학기 활동", "act"],
-  ["특강에서 기억에 남은 것", "lec"], ["질문", "question"], ["고른 이유", "reason"], ["찾은 자료와 출처", "r2"], ["알게 된 사실", "r3"], ["중간 점검(바꾼 점)", "mid"],
-  ["내 생각과 진로 연결", "r4"], ["달라진 생각", "v1"], ["직업 카드 다시 쓰기", "card2"], ["관련 학과", "major"], ["듣고 싶은 과목", "subj"], ["이어 갈 창체", "area"], ["다음 질문", "next"],
+const SUM = [["꿈꾸는 직업", "job"], ["기후 키워드", "kw"], ["2040 새로운 일", "job2040"], ["이번 학기 활동", "act"],
+  ["소감① 기억에 남는 내용", "e1"], ["소감② 배운 점·바뀐 생각", "e2"], ["소감③ 더 알아보고 싶은 점", "e3"], ["소감④ 진로와의 관련성", "e4"],
+  ["심화: 계열", "track"], ["심화: 과제", "hw"], ["심화: 질문", "question"], ["심화: 찾은 자료와 출처", "r2"], ["심화: 알게 된 사실", "r3"], ["심화: 바꾼 점", "mid"],
+  ["심화: 진로 연결", "r4"], ["심화: 달라진 생각", "v1"], ["관련 학과", "major"], ["듣고 싶은 과목", "subj"], ["이어 갈 창체", "area"], ["다음 질문", "next"],
   ["관찰 메모", "t_memo"], ["특기사항 초안", "t_note"]];
 function rubText(r) { return RUBRIC.map(function (x) { return filled(r[x[0]]) ? x[1] + " " + r[x[0]] : ""; }).filter(Boolean).join(" · "); }
 function noteView(sm) {
@@ -868,7 +885,7 @@ function summaryTab() {
         SUM.filter(function (x) { return filled(r[x[1]]); }).map(function (x) { return h("p", null, h("b", { text: x[0] + ": " }), String(r[x[1]])); }),
         SUM.some(function (x) { return ["track", "hw"].indexOf(x[1]) < 0 && filled(r[x[1]]); }) ? null :
           h("p", { class: "hint", text: anyStage
-            ? "요약에 모으는 칸(직업 카드, 질문, 3단계 보고서)은 아직 비어 있습니다. 지금까지 쓴 내용은 '제출 현황·확인'에서 학생을 누르면 볼 수 있습니다."
+            ? "요약에 모으는 칸(소감문, 심화 보고서)은 아직 비어 있습니다. 지금까지 쓴 내용은 '제출 현황·확인'에서 학생을 누르면 볼 수 있습니다."
             : "아직 저장한 내용이 없습니다." }));
     }));
 }

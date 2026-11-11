@@ -512,3 +512,7 @@ table.st tr.sel { background: var(--acc-soft); }
 @media (max-width: 560px) { .refdl { grid-template-columns: 1fr; } .refdl dd { margin-bottom: 6px; } }
 @media print { .topics { display: none; } }
 .tcard .ttip { margin: 0; font-size: .86rem; color: var(--muted); }
+.tguide details.tg { border-top: 1px solid var(--line); padding: 8px 0; }
+.tguide details.tg summary { cursor: pointer; font-weight: 700; }
+.tguide details.tg ol { margin: 8px 0 6px; padding-left: 22px; }
+.tguide details.tg p { margin: 4px 0 0; font-size: .92rem; }

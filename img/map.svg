@@ -35,24 +35,24 @@
   <circle r="27" fill="#ffffff" stroke="#84cc16" stroke-width="5" stroke-dasharray="7 5"/>
   <text y="9" text-anchor="middle" font-size="26">✍️</text>
   <rect x="-54" y="34" width="108" height="42" rx="12" fill="#4d7c0f"/>
-  <text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#ecfccb">1단계</text>
-  <text y="69" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">직업 카드·질문</text>
+  <text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#ecfccb">기본</text>
+  <text y="69" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">소감문</text>
 </g>
 <!-- 정거장 2: 탐구·기록 -->
 <g transform="translate(300 196)">
   <circle r="27" fill="#ffffff" stroke="#14b8a6" stroke-width="5" stroke-dasharray="7 5"/>
   <text y="9" text-anchor="middle" font-size="26">🔍</text>
   <rect x="-54" y="34" width="108" height="42" rx="12" fill="#0f766e"/>
-  <text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#ccfbf1">2단계</text>
-  <text y="69" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">자료 탐구</text>
+  <text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#ccfbf1">심화 ①</text>
+  <text y="69" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">질문·자료</text>
 </g>
 <!-- 정거장 3: 보고서·성찰 -->
 <g transform="translate(430 132)">
   <circle r="27" fill="#ffffff" stroke="#16a34a" stroke-width="5" stroke-dasharray="7 5"/>
-  <text y="9" text-anchor="middle" font-size="26">🧭</text>
+  <text y="9" text-anchor="middle" font-size="26">🚀</text>
   <rect x="-58" y="34" width="116" height="42" rx="12" fill="#166534"/>
-  <text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#dcfce7">3단계</text>
-  <text y="69" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">보고서·성찰</text>
+  <text y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#dcfce7">심화 ②</text>
+  <text y="69" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">보고서</text>
 </g>
 <!-- 도착: 큰 나무 -->
 <g transform="translate(550 214)">
@@ -71,5 +71,5 @@
   <text x="85" y="23" text-anchor="middle" font-size="13" font-weight="800" fill="#3f6212">2040년 내 직업은</text>
   <text x="85" y="41" text-anchor="middle" font-size="13" font-weight="800" fill="#3f6212">어떻게 바뀔까? 🌍</text>
 </g>
-<text x="590" y="352" text-anchor="end" font-size="12" font-weight="700" fill="#4d7c0f" opacity=".8">과제 A~D · 계열별 질문</text>
+<text x="590" y="352" text-anchor="end" font-size="12" font-weight="700" fill="#4d7c0f" opacity=".8">기본 소감문 · 심화 선택</text>
 </svg>
